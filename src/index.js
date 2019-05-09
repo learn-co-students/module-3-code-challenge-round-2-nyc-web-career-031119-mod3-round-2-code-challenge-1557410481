@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(e.target.id == "like_button"){
     let count = e.target.previousElementSibling.firstElementChild.innerText
     let likeCount = ++count
-    likeCount = count.innertext
+    likeCount = count
     console.log(likeCount)
     fetch(likeURL, {
       method: "POST",
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         image_id: imageId
       })
     })
-  
+
   }
  })
 
