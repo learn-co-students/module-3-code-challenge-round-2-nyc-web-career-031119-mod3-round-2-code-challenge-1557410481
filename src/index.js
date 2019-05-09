@@ -36,10 +36,21 @@ imageCard.addEventListener('click', function(e){
   if(likeButton === "like_button"){
     // console.log(parseInt(imageLikes.innerText))
     numLikes = parseInt(imageLikes.innerText)
-    // debugger
     ++numLikes
    imageLikes.innerText = numLikes
 
+   // console.log(imageId)
+
+   fetch(`${likeURL}`,{
+     method: "POST",
+     headers:{
+       "Content-Type": "application/json",
+       "Accept": "application/json"
+     },
+     body: JSON.stringify({
+        image_id: imageId
+     })
+   })
   }
 
 })
@@ -52,6 +63,15 @@ imageCard.addEventListener('click', function(e){
 
 
 //helper function===============
+// function persistLikes(num){
+//
+//   num
+//
+//
+//
+// }
+
+
   //helper function to render image
   function renderImage(image){
     imageHolder.src = `${image.url}`
