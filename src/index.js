@@ -14,18 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function render() {
         fetch(imageURL)
             .then(response => response.json())
-            .then(json => {
-            	// console.log(json)
+            .then(image => {
+            	// console.log(image)
             	
             	imageCard.innerHTML = 
-            							` 
-				<div class="row" id="image_content">
+         								` 
+				<div class="row" id="${image.id}">
 			      <div class="card col-md-4"></div>
 			      <div id="image_card" class="card col-md-4">
-			          <img src="${json.url}" id="image" data-id=""/>
-			          <h4 id="name">${json.name}</h4>
+			          <img src="${image.url}" id="image" data-id=""/>
+			          <h4 id="name">${image.name}</h4>
 			          <span>Likes:
-			            <span id="likes">${json.like_count}</span>
+			            <span id="likes">${image.like_count}</span>
 			          </span>
 			          <button id="like_button">Like</button>
 			          <form id="comment_form">
@@ -48,39 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
    
  
 
-  imageCard.addEventListener('click',() => {
-  		debugger
-  		
-  		const likes = document.getElementById('likes')
-      likes.innerText = parseFloat(likes.innerHTML)+1
-     
-      })
+    imageCard.addEventListener('click', () => {
+
+        const likes = document.getElementById('likes')
+        likes.innerText = parseFloat(likes.innerHTML) + 1
+
+        fetch(likeUrl, () => {
 
 
+        })
 
-
-
-
-
-
-
-
-
+    })
 
 
 render()
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 })
