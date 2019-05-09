@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('%c DOM Content Loaded and Parsed!', 'color: magenta')
 
+//Declarations ===========================================
   let imageId = 2587 //Enter the id from the fetched image here
 
   const imageURL = `https://randopic.herokuapp.com/images/${imageId}`
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let imageLikes = document.getElementById("likes")
   const imageComments = document.getElementById("comments")
   // const likeButton = imageCard.getElementById('like_button')
+  const commentForm = document.getElementById("comment_form")
 
   fetch(`${imageURL}`)
   .then(resp => resp.json())
@@ -24,22 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
 
-
-
-
-
-//EventListeners
+//=====EventListeners =================================================
 imageCard.addEventListener('click', function(e){
-
-  // let like_count = 0
   const likeButton = e.target.id
   if(likeButton === "like_button"){
-    // console.log(parseInt(imageLikes.innerText))
+
     numLikes = parseInt(imageLikes.innerText)
     ++numLikes
    imageLikes.innerText = numLikes
-
-   // console.log(imageId)
 
    fetch(`${likeURL}`,{
      method: "POST",
@@ -52,25 +46,34 @@ imageCard.addEventListener('click', function(e){
      })
    })
   }
+})
 
+
+//submit comments
+commentForm.addEventListener('submit', function(e){
+  e.preventDefault
+
+    let newComment = e.target.firstElementChild.value
+    console.log(newComment)
+    imageComments.innerHTML += `<li>${newComment}</li>`
+
+    // debugger
+    fetch(`${commentsURL}`,{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+         image_id: imageId,
+         content: newComment
+      })
+    })
 })
 
 
 
-
-
-
-
-
-//helper function===============
-// function persistLikes(num){
-//
-//   num
-//
-//
-//
-// }
-
+//helper functions=======================================
 
   //helper function to render image
   function renderImage(image){
@@ -80,17 +83,11 @@ imageCard.addEventListener('click', function(e){
     findAllComments(image.comments)
   }
 
-function findAllComments(comments){
-  comments.forEach(function(comment){
-    imageComments.innerHTML += `<li>${comment.content}</li>`
-  })
-}
-
-
-
-
-
-
-
+//finds all comments.... (you really need me to tell ya that? read the name!)
+  function findAllComments(comments){
+    comments.forEach(function(comment){
+      imageComments.innerHTML += `<li>${comment.content}</li>`
+    })
+  }
 
 })
